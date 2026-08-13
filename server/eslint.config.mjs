@@ -11,6 +11,7 @@ export default [
     languageOptions: {
       parser: tsParser,
       globals: {
+        __dirname: 'readonly',
         console: 'readonly',
         process: 'readonly'
       },
