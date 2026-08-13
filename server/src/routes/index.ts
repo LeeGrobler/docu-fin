@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import placeholderRoutes from './placeholder.routes';
+import loginRoutes from './login.routes';
 
 const router = Router();
 
-router.use('/placeholder', placeholderRoutes);
+router.use('/login', loginRoutes);
 
 export default router;

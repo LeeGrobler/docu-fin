@@ -158,6 +158,22 @@ I copy/pasted the improved code ChatGPT gave me and followed the exact same stra
 
 ## Database Initialisation Script
 
-Once I had the schema and seed sql scripts in place, I wrote the `server/src/db/init.ts` script that will automatically set up the tables in the database as well as seed each table with one record each. For the user seed, I made sure to include a bcrypt hashing step so that no further work is required when reviewing the login flow. The `init.ts` script can be run as an npm command as `npm run db:init` from the `/server` directory.
+Once I had the schema and seed sql scripts in place, I wrote the `server/src/db/init.ts` script which will automatically set up the tables in the database as well as seed each table with one record each. For the user seed, I made sure to include a bcrypt hashing step so that no further work is required when reviewing the login flow. The `init.ts` script can be run as an npm command as `npm run db:init` from the `/server` directory.
+
+This will give you a user that can be logged in with the following details:
+
+email address: admin@acme-finance.test
+password: *to be set in `server\src\db\init.ts` before running the script*
+
+
+## Login Route
+
+For the login route, I created the POST route `/api/login` in `server/src/routes/login.routes.ts`.
+
+- First I check the request for an email and password and if either of them are not present I throw a 400 error letting the user know to enter an email and password.
+- Next the email and password is forwarded to the login service's (`server\src\services\login.service.ts`) `login` function.
+- I start by querying the `users` table for a user with a matching email address and if it doesn't exist, I throw a 401 and let the user know the email _or password_ is incorrect. I don't distinguish between which one is incorrect for security reasons.
+- If the user is found, I do a `bcrypt.compare()` between the entered password and the db entity's password hash. If it's not a match, I throw the exact same 401 error, for the same security reason.
+- Finally, if the passwords match, I generate and sign a new JWT using the JWT Secret that's stored in `.env`, which contains the user's id, email address and tenant_id and send it as the response to a client.
 
 
