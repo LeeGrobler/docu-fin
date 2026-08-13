@@ -5,13 +5,28 @@ import { pool } from "../db";
 import { config } from '../config';
 import { HttpError } from '../utils/HttpError';
 
+type LoginUser = {
+  id: string;
+  tenant_id: string;
+  email: string;
+  password_hash: string;
+};
+
 async function getUser(email: string) {
-  const user = await pool.query('SELECT * FROM users WHERE email = $1', [email])
+  const user = await pool.query<LoginUser>(
+    `
+      SELECT id, tenant_id, email, password_hash
+      FROM users
+      WHERE email = $1
+      LIMIT 1
+    `,
+    [email]
+  )
   if (!user?.rowCount || user.rowCount < 1) {
     throw new HttpError(401, 'Incorrect email or password.')
   }
 
-  return user
+  return user.rows[0]
 }
 
 async function checkPassword(password: string, hash: string) {
@@ -21,7 +36,7 @@ async function checkPassword(password: string, hash: string) {
   }
 }
 
-function generateJwt(id: string, email: string, tenant_id: string) { // TODO: update this with proper types once generated from supabase
+function generateJwt({ id, email, tenant_id }: LoginUser) {
   return jwt.sign({ id, email, tenant_id }, config.jwtSecret, {
     expiresIn: config.jwtExpiresIn as SignOptions['expiresIn']
   })
@@ -30,7 +45,7 @@ function generateJwt(id: string, email: string, tenant_id: string) { // TODO: up
 export const loginService = {
   login: async (email: string, password: string) => {
     const user = await getUser(email)
-    await checkPassword(password, user.rows[0].password_hash)
-    return generateJwt(user.rows[0].id, user.rows[0].email, user.rows[0].tenant_id) // TODO: here too
+    await checkPassword(password, user.password_hash)
+    return generateJwt(user)
   }
 };

@@ -10,7 +10,7 @@ router.post('/', async (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
 
-    if (!email || !password) {
+    if (typeof email !== 'string' || typeof password !== 'string' || !email || !password) {
       throw new HttpError(400, 'Please enter an email address and password.')
     }
 
