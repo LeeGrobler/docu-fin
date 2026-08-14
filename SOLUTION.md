@@ -224,3 +224,13 @@ Similar to the backend I asked Codex to scaffold a frontend react app with the f
 
 Scaffold a React app in a /client directory based on the provided assessment requirements and existing backend. Install the minimum necessary packages required to interface with the backend, as well as MUI for styling/components. Only scaffold the application and project structure and do not write any feature implementation code.
 
+### Outcome:
+
+Codex scaffolded an empty Vite/React/Typescript with MUI as the component library.
+
+
+## Routes Setup
+
+Because Codex didn't include react router in its scaffold step (I should've asked it to, to be fair), I manually set up react router, an empty navbar, and the empty pages that will be on the site, which is /home, /login, and /documents.
+
+
