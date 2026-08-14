@@ -234,3 +234,11 @@ Codex scaffolded an empty Vite/React/Typescript with MUI as the component librar
 Because Codex didn't include react router in its scaffold step (I should've asked it to, to be fair), I manually set up react router, an empty navbar, and the empty pages that will be on the site, which is /home, /login, and /documents.
 
 
+## App Layout and Home Page
+
+I setup the basic navbar with a logo, links and action buttons. I also asked Codex to setup a dummy home page with the following prompt and everything seen on `client/src/pages/home.page.tsx` is what Codex setup, with me only removing some of its excesses.
+
+### Prompt:
+
+Set up a nice on-brand, assessment-relevant landing page here (*I attached the home page to the prompt*), with a CTA to log in.
+
