@@ -12,7 +12,7 @@ export type Document = {
 
 export const documentService = {
   listDocumentsByTenantId: async (tenant_id: string) => {
-    const documents = await pool.query<Document>(
+    const documentPromise = await pool.query<Document>(
       `
         SELECT * FROM documents
         WHERE tenant_id = $1
@@ -20,8 +20,16 @@ export const documentService = {
       [tenant_id]
     )
 
-    console.log('documents: ', documents);
+    const documents = documentPromise.rows.map((document) => ({
+      id: document.id,
+      tenantId: document.tenant_id,
+      identifier: document.identifier,
+      title: document.title,
+      status: document.status,
+      createdAt: document.created_at,
+      updatedAt: document.updated_at
+    }))
 
-    return documents.rows
+    return documents
   }
 };
