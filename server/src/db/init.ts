@@ -7,7 +7,7 @@ import { config } from '../config';
 
 const init = async () => {
   const saltRounds = Number(config.bcryptSaltRounds)
-  const passwordHash = await bcrypt.hash('Password123!', saltRounds) // TODO: update this to the desired password
+  const passwordHash = await bcrypt.hash('Password123!', saltRounds)
 
   const schema = fs.readFileSync(path.join(__dirname, "schema.sql"), "utf8");
   const seed = fs.readFileSync(path.join(__dirname, "seed.sql"), "utf8").replace('<hash_goes_here>', passwordHash);

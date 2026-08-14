@@ -11,7 +11,12 @@ router.get('/', async (req, res, next) => {
     const tenantId = req.auth?.tenantId
     if (!tenantId) throw new HttpError(400, 'Invalid tenant.')
 
-    const documents = await documentService.listDocumentsByTenantId(tenantId)
+    const search = req.query.search
+    if (typeof search !== 'undefined' && typeof search !== 'string') {
+      throw new HttpError(400, 'Search must be a string.')
+    }
+
+    const documents = await documentService.listDocumentsByTenantId(tenantId, search?.trim() || undefined)
     res.status(200).json({ documents, message: 'Documents retrieved.' });
   } catch (error) {
     console.error('error: ', error);

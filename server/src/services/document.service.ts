@@ -14,13 +14,15 @@ function convertDocumentsToPublic(documents: Document[]) {
 }
 
 export const documentService = {
-  listDocumentsByTenantId: async (tenantId: string) => {
+  listDocumentsByTenantId: async (tenantId: string, search?: string) => {
     const documents = await pool.query<Document>(
       `
-        SELECT * FROM documents
+        SELECT id, tenant_id, identifier, title, status, created_at, updated_at
+        FROM documents
         WHERE tenant_id = $1
+          AND ($2::text IS NULL OR title ILIKE '%' || $2 || '%')
       `,
-      [tenantId]
+      [tenantId, search ?? null]
     )
 
     return convertDocumentsToPublic(documents.rows)
