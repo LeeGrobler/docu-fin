@@ -7,7 +7,9 @@
 > My general AI strategy for this project is to offload initialisation and as much scaffolding work as possible to Codex, while I code the implementation details myself. And for scaffolding tasks I was sure to give as much detail as possible so that I can retain control of the architecture of the project.
 
 
-## Backend Scaffolding
+# Backend
+
+## Scaffolding
 
 For my first prompt, I used ChatGPT to refine my scaffolding prompt to be used with Codex.
 
@@ -210,4 +212,15 @@ Tenant scoping is enforced by deriving `tenantId` from the verified JWT in the a
 For this small assignment I did not add pagination because it was explicitly out of scope. For a larger dataset, the first performance improvement would be adding indexes such as `documents(tenant_id)` for tenant filtering and `documents(tenant_id, title)` for tenant-scoped title search.
 
 I again asked Codex to review my changes but found that it's suggested improvements were either invalid or minor enough to ignore.
+
+
+# Frontend
+
+## Scaffolding
+
+Similar to the backend I asked Codex to scaffold a frontend react app with the following prompt:
+
+### Prompt:
+
+Scaffold a React app in a /client directory based on the provided assessment requirements and existing backend. Install the minimum necessary packages required to interface with the backend, as well as MUI for styling/components. Only scaffold the application and project structure and do not write any feature implementation code.
 
