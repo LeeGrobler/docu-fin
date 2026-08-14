@@ -176,4 +176,26 @@ For the login route, I created the POST route `/api/login` in `server/src/routes
 - If the user is found, I do a `bcrypt.compare()` between the entered password and the db entity's password hash. If it's not a match, I throw the exact same 401 error, for the same security reason.
 - Finally, if the passwords match, I generate and sign a new JWT using the JWT Secret that's stored in `.env`, which contains the user's id, email address and tenant_id and send it as the response to a client.
 
+At this point I asked Codex to review my changes and apply any better solutions. The diff of what I wrote can be seen [here](https://github.com/LeeGrobler/docu-fin/commit/a1b9659c649a7fba0019f38ebbdba8c265686551) and the diff of Codex's updates can be seen [here](https://github.com/LeeGrobler/docu-fin/commit/a4bd8ee9a9d6bfa8ea23f94ab4d4ee5a74b92651).
 
+### Prompt:
+
+Review my staged changes and apply patches to any medium or higher problems.
+
+### Outcome:
+
+Codex applied three changes:
+
+- Updated login route to reject non-string params.
+- Updated login service to only select required properties. 
+- Updated .env config to fail if no jwtSecret exists.
+
+
+## Authentication Middleware
+
+I created the authentication middleware (`server\src\middleware\authHandler.ts`) to confirm that a valid bearer token is attached to all document requests and to inform the downstream route of the request's tenant and user details.
+
+
+## Document routes
+
+Coming up next!

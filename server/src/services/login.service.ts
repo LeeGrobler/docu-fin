@@ -37,7 +37,11 @@ async function checkPassword(password: string, hash: string) {
 }
 
 function generateJwt({ id, email, tenant_id }: LoginUser) {
-  return jwt.sign({ id, email, tenant_id }, config.jwtSecret, {
+  return jwt.sign({
+    user_id: id,
+    user_email: email,
+    tenant_id
+  }, config.jwtSecret, {
     expiresIn: config.jwtExpiresIn as SignOptions['expiresIn']
   })
 }
