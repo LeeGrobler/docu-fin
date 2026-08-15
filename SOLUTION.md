@@ -240,5 +240,16 @@ I setup the basic navbar with a logo, links and action buttons. I also asked Cod
 
 ### Prompt:
 
-Set up a nice on-brand, assessment-relevant landing page here (*I attached the home page to the prompt*), with a CTA to log in.
+Set up a nice on-brand, assessment-relevant landing page here (*home page*), with a CTA to log in.
+
+
+## App State and Authentication
+
+For the frontend authentication state I created an `AuthProvider` in `client/src/context/auth.context.tsx` which stores the JWT token in localStorage and exposes the logged in state to the rest of the app. I also added a small `useAuth()` helper in the same file so that components don't have to repeat the null check every time they need the auth context.
+
+The login page (`client/src/pages/login.page.tsx`) keeps the email, password, loading state and error message as local component state. When the form is submitted it calls the `login` function from the auth context, which then uses `client/src/api/client.ts` to call the backend's `/api/login` route. The api client reads `VITE_API_BASE_URL` from the client's `.env` file, so the frontend is not dependant on the backend running on a hardcoded URL.
+
+For routing, I added a `ProtectedRoute` component which redirects unauthenticated users away from `/documents` and a `GuestRoute` component which does the opposite for `/login`. I also moved the navbar into an app layout route so that it still sits above all pages, but can use React Router links instead of normal anchor links, which avoids a full page refresh when navigating around the app.
+
+Finally I updated the navbar and home page actions to only show routes that the user can actually access. If a user is logged out they only see the home and login actions. If they're logged in, the navbar links them to documents and gives them a logout button instead.
 

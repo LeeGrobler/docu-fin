@@ -1,16 +1,15 @@
 import { RouterProvider } from 'react-router-dom'
 
 import './App.css'
+import { AuthProvider } from './context/auth.context'
 import { router } from './router'
-import Navbar from './components/navbar.component'
 
 function App() {
-  return <>
-    <Navbar />
-    <main>
+  return (
+    <AuthProvider>
       <RouterProvider router={router} />
-    </main>
-  </>
+    </AuthProvider>
+  )
 }
 
 export default App

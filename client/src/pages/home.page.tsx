@@ -14,7 +14,7 @@ export default function Home() {
         minHeight: 'calc(100vh - 4rem)',
       }}
     >
-      <Container maxWidth="lg" sx={{ py: { xs: 8, md: 12 } }}>
+      <Container maxWidth="xl" sx={{ py: { xs: 8, md: 12 } }}>
         <Box sx={{ maxWidth: 620 }}>
           <Box component="img" src={logo} alt="DocuFin" sx={{ height: 38, mb: 5, width: 'auto' }} />
 
@@ -51,22 +51,6 @@ export default function Home() {
               }}
             >
               Sign in
-            </Button>
-            <Button
-              component={RouterLink}
-              to="/documents"
-              size="large"
-              variant="outlined"
-              sx={{
-                borderColor: 'rgba(255, 255, 255, 0.55)',
-                color: 'common.white',
-                fontWeight: 700,
-                px: 3,
-                textTransform: 'none',
-                '&:hover': { borderColor: 'common.white', bgcolor: 'rgba(255, 255, 255, 0.08)' },
-              }}
-            >
-              View workspace
             </Button>
           </Stack>
         </Box>
