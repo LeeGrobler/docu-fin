@@ -253,3 +253,12 @@ For routing, I added a `ProtectedRoute` component which redirects unauthenticate
 
 Finally I updated the navbar and home page actions to only show routes that the user can actually access. If a user is logged out they only see the home and login actions. If they're logged in, the navbar links them to documents and gives them a logout button instead.
 
+
+## Documents
+
+For the documents page, I kept the frontend architecture at the same level as the login flow. I added the document api calls to `client/src/api/client.ts`, so the page itself doesn't need to know how the backend URL or authorization headers are put together. The list request calls `GET /api/document` and the update request calls `PATCH /api/document/:documentId/status`, both using the JWT token from the auth context.
+
+In `client/src/pages/documents.page.tsx`, I keep the documents array, search input, loading state, update state and error message as local page state. When the page loads it fetches the tenant's documents from the backend and displays them in a basic MUI table. The search form forwards the search text as a query param so that it uses the backend's existing title search instead of filtering client side.
+
+I also added a simple status dropdown for each document row. When the selected status changes, the page calls the update endpoint and replaces the updated document in local state with the response from the server. If the backend returns an unauthorized response, the page calls `logout()` from the auth context so that the user is sent back through the normal authentication flow.
+
