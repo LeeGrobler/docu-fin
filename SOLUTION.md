@@ -160,12 +160,12 @@ I copy/pasted the improved code ChatGPT gave me and followed the exact same stra
 
 ## Database Initialisation Script
 
-Once I had the schema and seed sql scripts in place, I wrote the `server/src/db/init.ts` script which will automatically set up the tables in the database as well as seed each table with one record each. For the user seed, I made sure to include a bcrypt hashing step so that no further work is required when reviewing the login flow. The `init.ts` script can be run as an npm command as `npm run db:init` from the `/server` directory.
+Once I had the schema and seed sql scripts in place, I wrote the `server/src/db/init.ts` script which will automatically set up the tables in the database as well as seed the tenant, user, and a few documents. For the user seed, I made sure to include a bcrypt hashing step so that no further work is required when reviewing the login flow. The `init.ts` script can be run as an npm command as `npm run db:init` from the `/server` directory.
 
 This will give you a user that can be logged in with the following details:
 
 email address: admin@acme-finance.test
-password: *to be set in `server\src\db\init.ts` before running the script*
+password: Password123!
 
 
 ## Login Route
